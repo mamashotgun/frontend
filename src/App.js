@@ -13,12 +13,11 @@ import CategoriesStepsButtons from './components/SelectionStepper/CategoriesStep
 
 function App() {
   return (
-<<<<<<< HEAD
     <Router>
       <div>
         <Switch>
           <Route exact path="/">
-            <Chalender />
+          <Chalender placeID={1} courseID={1} placeName="mamas"/>
           </Route>
           <Route path="/Base" component={BaseStepsButtons} />
 
@@ -28,11 +27,6 @@ function App() {
             <StepperLine />
           </Route>
         </Switch>
-=======
-    <div className="App">
-      <div className="main-section">
-        <Chalender placeID={1} courseID={1} placeName="mamas"/>
->>>>>>> chalendarComponent
       </div>
     </Router>
   );
