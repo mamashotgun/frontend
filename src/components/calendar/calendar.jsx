@@ -14,7 +14,7 @@ export default class DemoApp extends React.Component {
 
   render() {
     return (
-      <div className='calendar-container'>
+      <div className='component-calander-container'>
         {/*this.renderSidebar()*/}
         <Card>
           <div className='calendar-main'>
