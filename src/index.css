@@ -22,7 +22,7 @@ code {
   justify-content: space-between;
   text-align: center;
 
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(30px);
   background-color: rgba(244, 242, 222, 0.15);
   box-shadow: rgb(0 0 0 / 30%) 2px 8px 8px;
   border-width: 2px;
