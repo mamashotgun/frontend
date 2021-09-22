@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./SignUp.css";
 const { Button, TextField } = require("@mui/material");
 
@@ -8,12 +9,14 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
 
+  const history = useHistory();
+
   const onSubmit = async () => {
     const headers = {
       headers: { "Content-Type": "application/json" },
     };
 
-    await axios.post(
+    const response = await axios.post(
       `${process.env.REACT_APP_API_ADDRESS}/courses`,
       {
         name: courseName,
@@ -23,6 +26,8 @@ export default function SignUp() {
       },
       headers
     );
+
+    history.push({ pathname: "/Base", params: { id: response.data.id } });
   };
 
   return (
