@@ -13,14 +13,17 @@ export default class DemoApp extends React.Component {
     currentEvents: [],
     placeName: this.props.placeName,
     course_id: this.props.courseID,
-    place_id: this.props.placeID
+    place_id: this.props.placeID,
+    isLoading: true,
+    calendarEvents: []
   }
  
   render() {
     return (
       <div className='component-calander-container'>
-        <p>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
+        <p style={{position:"absolut", buttom: 0}}>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
         {/*this.renderSidebar()*/}
+        {!this.state.isLoading &&
         <div className='calendar-card'>
           <Card>
             <div className='calendar-main'>
@@ -37,6 +40,7 @@ export default class DemoApp extends React.Component {
                 selectMirror={true}
                 dayMaxEvents={true}
                 weekends={this.state.weekendsVisible}
+                initialEvents={this.state.calendarEvents} // alternatively, use the `events` setting to fetch from a feed
                 select={this.handleDateSelect}
                 eventContent={renderEventContent} // custom render function
                 eventClick={this.handleEventClick}
@@ -51,6 +55,7 @@ export default class DemoApp extends React.Component {
             </div>
           </Card>
           </div>
+  }
       </div>
     )
   }
@@ -86,6 +91,33 @@ export default class DemoApp extends React.Component {
     )
   }
 
+  componentDidMount = async () => {
+    this.updateCalendar(await this.getDates()) 
+  }
+  getDates = async () => {
+    const response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/reservations?place_id=${this.state.place_id}`)
+    console.log(response);
+    return response.data
+  }
+
+  updateCalendar = (dataList) => {
+    const tempArr = []
+    dataList.forEach(item => {
+      tempArr.push(
+        {
+          id: item.reservation_id,
+          title: item.display_name,
+          start: item.start_time,
+          end: item.end_time,
+          allDay: false
+        }
+      )
+    })
+    this.setState({...this.state, calendarEvents: tempArr})
+    this.setState({...this.state,isLoading: false})
+
+  }
+
   handleWeekendsToggle = () => {
     this.setState({
       weekendsVisible: !this.state.weekendsVisible
@@ -103,18 +135,12 @@ export default class DemoApp extends React.Component {
     const response = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/reservations`, 
     { 
       place_id: this.state.place_id,
-      course_id: 1,
+      course_id: this.state.course_id,
       start_time: selectInfo.start,
       end_time: selectInfo.end
     }, article);
-    console.log(response);
-    calendarApi.addEvent({
-      id: 0,
-      title,
-      start: selectInfo.startStr,
-      end: selectInfo.endStr,
-      allDay: selectInfo.allDay
-    })
+
+    // add indication of success
   }
 
   handleEventClick = (clickInfo) => {
@@ -128,8 +154,7 @@ export default class DemoApp extends React.Component {
       currentEvents: events
     })
   }
-
-}
+} // end of class
 
 function renderEventContent(eventInfo) {
   return (
