@@ -6,14 +6,15 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import Card from '@mui/material/Card';
 import axios from 'axios'
+import CircularIndeterminate from '../loading/loading'
 export default class DemoApp extends React.Component {
- 
   state = {
     weekendsVisible: true,
     currentEvents: [],
     placeName: this.props.placeName,
     course_id: this.props.courseID,
     place_id: this.props.placeID,
+    description: this.props.description,
     isLoading: true,
     calendarEvents: []
   }
@@ -21,9 +22,9 @@ export default class DemoApp extends React.Component {
   render() {
     return (
       <div className='component-calander-container'>
-        <p style={{position:"absolut", buttom: 0}}>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
-        {/*this.renderSidebar()*/}
-        {!this.state.isLoading &&
+        {
+        !this.state.isLoading 
+        ? 
         <div className='calendar-card'>
           <Card>
             <div className='calendar-main'>
@@ -54,8 +55,9 @@ export default class DemoApp extends React.Component {
               />
             </div>
           </Card>
-          </div>
+          </div> : CircularIndeterminate
   }
+          <p style={{position:"absolut", buttom: 0}}>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
       </div>
     )
   }
@@ -77,6 +79,7 @@ export default class DemoApp extends React.Component {
           title: item.display_name,
           start: item.start_time,
           end: item.end_time,
+          someFakeData: 12341234123412341234,
           allDay: false
         }
       )
@@ -111,9 +114,13 @@ export default class DemoApp extends React.Component {
   }
 
   handleEventClick = (clickInfo) => {
-    if (prompt(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove()
+    console.log(clickInfo);
+    if(prompt("are you sure you want to delete?")){
+      axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
     }
+    // if (prompt(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
+    //   clickInfo.event.remove()
+    // }
   }
 
   handleEvents = (events) => {
