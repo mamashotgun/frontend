@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="App">
       <div className="main-section">
-        <Chalender/>
+        <Chalender placeID={1} courseID={1} placeName="mamas"/>
       </div>
     </div>
   );

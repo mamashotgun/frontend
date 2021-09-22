@@ -5,44 +5,52 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import Card from '@mui/material/Card';
+import axios from 'axios'
 export default class DemoApp extends React.Component {
  
   state = {
     weekendsVisible: true,
-    currentEvents: []
+    currentEvents: [],
+    placeName: this.props.placeName,
+    course_id: this.props.courseID,
+    place_id: this.props.placeID
   }
-
+ 
   render() {
     return (
       <div className='component-calander-container'>
+        <p>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
         {/*this.renderSidebar()*/}
-        <Card>
-          <div className='calendar-main'>
-            <FullCalendar
-              plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-              headerToolbar={{
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-              }}
-              initialView='dayGridMonth'
-              editable={true}
-              selectable={true}
-              selectMirror={true}
-              dayMaxEvents={true}
-              weekends={this.state.weekendsVisible}
-              select={this.handleDateSelect}
-              eventContent={renderEventContent} // custom render function
-              eventClick={this.handleEventClick}
-              eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-              /* you can update a remote database when these fire:
-              eventAdd={function(){}}
-              eventChange={function(){}}
-              eventRemove={function(){}}
-              */
-            />
+        <div className='calendar-card'>
+          <Card>
+            <div className='calendar-main'>
+              <FullCalendar
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                headerToolbar={{
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                }}
+                initialView='dayGridMonth'
+                editable={true}
+                selectable={true}
+                selectMirror={true}
+                dayMaxEvents={true}
+                weekends={this.state.weekendsVisible}
+                select={this.handleDateSelect}
+                eventContent={renderEventContent} // custom render function
+                eventClick={this.handleEventClick}
+                eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
+                eventChange={function(s){console.log(s);}}
+                /* you can update a remote database when these fire:
+                eventAdd={function(){}}
+                eventChange={function(){}}
+                eventRemove={function(){}}
+                */
+              />
+            </div>
+          </Card>
           </div>
-        </Card>
       </div>
     )
   }
@@ -84,21 +92,29 @@ export default class DemoApp extends React.Component {
     })
   }
 
-  handleDateSelect = (selectInfo) => {
+  handleDateSelect =  async (selectInfo) => {
     let title = prompt('Please enter a new title for your event')
     let calendarApi = selectInfo.view.calendar
 
     calendarApi.unselect() // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: 0,
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay
-      })
-    }
+    const article = { 
+      headers: {'Content-Type': 'application/json'}
+      };
+    const response = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/reservations`, 
+    { 
+      place_id: this.state.place_id,
+      course_id: 1,
+      start_time: selectInfo.start,
+      end_time: selectInfo.end
+    }, article);
+    console.log(response);
+    calendarApi.addEvent({
+      id: 0,
+      title,
+      start: selectInfo.startStr,
+      end: selectInfo.endStr,
+      allDay: selectInfo.allDay
+    })
   }
 
   handleEventClick = (clickInfo) => {
