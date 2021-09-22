@@ -1,0 +1,19 @@
+.login  {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 10%;
+}
+
+.login .textbox {
+    margin-top: 0.5em;
+}
+
+.login .loginButton  {
+    margin-top: 1em;
+}
+
+.login p {
+    text-align: center;
+}
