@@ -13,7 +13,7 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/">
-            <Login />
+          <Chalender placeID={1} courseID={1} placeName="mamas"/>
           </Route>
 
           <Route path="/Login" component={Login} />
