@@ -5,10 +5,6 @@ const { Button, TextField } = require("@mui/material");
 export default function Login() {
   const history = useHistory();
 
-  const goToSignUp = () => {
-    history.push({ pathname: "/SignUp" });
-  };
-
   return (
     <div className="login">
       <h1>Shotgun</h1>
@@ -21,13 +17,21 @@ export default function Login() {
         variant="outlined"
       />
 
-      <Button className="loginButton" variant="contained">
+      <Button
+        className="loginButton"
+        variant="contained"
+        onClick={() => history.push({ pathname: "/Base" })}
+      >
         Login
       </Button>
 
       <p>Or if you're new:</p>
 
-      <Button className="signUpButton" variant="outlined" onClick={goToSignUp}>
+      <Button
+        className="signUpButton"
+        variant="outlined"
+        onClick={() => history.push({ pathname: "/SignUp" })}
+      >
         Create a course
       </Button>
     </div>
