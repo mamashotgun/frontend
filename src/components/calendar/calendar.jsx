@@ -73,6 +73,7 @@ export default class DemoApp extends React.Component {
 
   updateCalendar = (dataList) => {
     const tempArr = []
+    console.log("updating calender");
     dataList.forEach(item => {
       tempArr.push(
         {
@@ -100,6 +101,7 @@ export default class DemoApp extends React.Component {
     let calendarApi = selectInfo.view.calendar
 
     calendarApi.unselect() // clear date selection
+    this.setState({...this.state,isLoading: true})
     const article = { 
       headers: {'Content-Type': 'application/json'}
       };
@@ -121,6 +123,7 @@ export default class DemoApp extends React.Component {
         axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
       }
     }
+    this.setState({...this.state,isLoading: true})
     this.updateCalendar(await this.getDates()) 
   }
 

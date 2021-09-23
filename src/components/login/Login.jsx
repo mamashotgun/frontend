@@ -1,8 +1,35 @@
+import axios from "axios";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
 const { Button, TextField } = require("@mui/material");
 
 export default function Login() {
+  const [courseName, setCourseName] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      const headers = {
+        headers: { "Content-Type": "application/json" },
+      };
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_ADDRESS}/courses/login`,
+        {
+          name: courseName,
+          password: password,
+        },
+        headers
+      );
+      localStorage.setItem("course", JSON.stringify(response.data));
+
+      history.push({ pathname: "/Base" });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const history = useHistory();
 
   return (
