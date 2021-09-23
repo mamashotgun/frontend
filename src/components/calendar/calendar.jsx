@@ -26,8 +26,7 @@ export default class DemoApp extends React.Component {
   }
 
   render() {
-    console.log(this.props)
-    console.log(this.state);
+
     return (
       <div className='component-calander-container'>
         <div className="calendarNav">
@@ -57,11 +56,11 @@ export default class DemoApp extends React.Component {
                     eventContent={renderEventContent} // custom render function
                     eventClick={this.handleEventClick}
                     eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
-                    eventChange={function (s) { console.log(s); }}
-                  /* you can update a remote database when these fire:
-                  eventAdd={function(){}}
-                  eventChange={function(){}}
-                  eventRemove={function(){}}
+                    eventChange={this.handleChange}
+                    /* you can update a remote database when these fire:
+                    eventRemove={function(){}}
+                    eventChange={function(){}}
+                    eventAdd={function(){}}
                   */
                   />
                 </div>
@@ -76,11 +75,36 @@ export default class DemoApp extends React.Component {
   componentDidMount = async () => {
     this.updateCalendar(await this.getDates())
   }
+
   getDates = async () => {
     const response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/reservations?place_id=${this.state.place_id}`)
-    console.log(response);
     return response.data
   }
+
+  handleChange = async (changeEvent) => {
+    console.log(changeEvent.event);
+    const response = await axios.post(`${process.env.REACT_APP_API_ADDRESS}/reservations/is_available`, {
+      place_id: this.state.place_id,
+      reservation_id: changeEvent.event._def.publicId,
+      start_time: changeEvent.event._instance.range.start,
+      end_time: changeEvent.event._instance.range.end
+    })
+    console.log(response);
+    if(response.data){
+      axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${changeEvent.event._def.publicId}`)
+      const article = {
+        headers: { 'Content-Type': 'application/json' }
+      };
+      await axios.post(`${process.env.REACT_APP_API_ADDRESS}/reservations`,
+      {
+        place_id: this.state.place_id,
+        course_id: this.state.course_id,
+        start_time: changeEvent.event._instance.range.start,
+        end_time: changeEvent.event._instance.range.end
+      }, article);
+    }
+  }
+
   updateCalendar = (dataList) => {
     const tempArr = []
 
@@ -107,7 +131,7 @@ export default class DemoApp extends React.Component {
   }
 
   handleDateSelect = async (selectInfo) => {
-    let title = this.props.userDisplayName
+    let title = this.state.userDisplayName
     let calendarApi = selectInfo.view.calendar
 
     calendarApi.unselect() // clear date selection
@@ -122,10 +146,8 @@ export default class DemoApp extends React.Component {
         end_time: selectInfo.end
       }, article);
 
-    console.log(response.data);
-
     calendarApi.addEvent({
-      id: response.data,
+      id: response.data.id,
       title,
       start: selectInfo.startStr,
       end: selectInfo.endStr,
@@ -134,7 +156,7 @@ export default class DemoApp extends React.Component {
   }
 
   handleEventClick = async (clickInfo) => {
-    if (this.props.isAdmin || clickInfo.event._def.extendedProps.course_id === this.props.course_id) {
+    if (this.state.isAdmin || clickInfo.event._def.extendedProps.course_id === this.state.course_id) {
       if (prompt("are you sure you want to delete? (type YES)")) {
         axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
         clickInfo.event.remove()

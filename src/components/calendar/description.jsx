@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 
 export default function Description(props) {
-    console.log("from description", props);
     return (
         <div className="description-container">
             <Card>
