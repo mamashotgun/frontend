@@ -24,11 +24,11 @@ export default function PlacesStepsButtons(props) {
 
     }, [])
 
-    const LoadCalender = (place_id) => {
+    const LoadCalender = (placeObject) => {
+        console.log({ placeID: placeObject.place_id, PlaceName: placeObject.name, description: placeObject.description })
         history.push({
-            pathname: '/Category',  // query string
-            //params: { placeID: baseId, courseID: , placeName,  }
-
+            pathname: '/placeCalender',  // query string
+            params: { placeID: placeObject.place_id, PlaceName: placeObject.name, description: placeObject.description }
         })
     }
 
@@ -38,7 +38,7 @@ export default function PlacesStepsButtons(props) {
             {
                 places?.map((buttonText, index) => {
                     return (
-                        <Button id="stepper-buttons" variant="outlined" onClick={() => LoadCalender(buttonText.place_id)} key={index}>{buttonText.name}</Button>
+                        <Button id="stepper-buttons" variant="outlined" onClick={() => LoadCalender(buttonText)} key={index}>{buttonText.name}</Button>
                     )
                 })
             }

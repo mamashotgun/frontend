@@ -31,6 +31,8 @@ function App() {
 
           <Route path="/places" component={PlacesStepsButtons} />
 
+          <Route path="/placeCalender" component={Chalender} />
+
           <Route path="/about">
             <StepperLine />
           </Route>
