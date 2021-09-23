@@ -7,25 +7,32 @@ import interactionPlugin from '@fullcalendar/interaction'
 import Card from '@mui/material/Card';
 import axios from 'axios'
 import CircularIndeterminate from '../loading/loading'
+import Navbar from '../navbar/navbar'
+import Description from './description'
+
 export default class DemoApp extends React.Component {
 
   state = {
     weekendsVisible: true,
     currentEvents: [],
-    placeName: this.props.location.params.placeName,
-    userDisplayName: this.props.location.params.course.userDisplayName,
+    placeName: this.props.location.params.PlaceName,
+    userDisplayName: this.props.location.params.course.display_name,
     course_id: this.props.location.params.course.course_id,
     place_id: this.props.location.params.placeID,
     description: this.props.location.params.description,
     isLoading: true,
-    isAdmin: this.props.location.params.course.isAdmin,
+    isAdmin: this.props.location.params.course.is_admin,
     calendarEvents: []
   }
 
   render() {
     console.log(this.props)
+    console.log(this.state);
     return (
       <div className='component-calander-container'>
+        <div className="calendarNav">
+        <Navbar/>
+        </div>
         {
           !this.state.isLoading
             ?
@@ -61,7 +68,7 @@ export default class DemoApp extends React.Component {
               </Card>
             </div> : CircularIndeterminate
         }
-        <p style={{ position: "absolut", buttom: 0 }}>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
+        <Description name={`${this.state.placeName}`} description={`${this.state.description}`} />
       </div>
     )
   }

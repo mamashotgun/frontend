@@ -12,6 +12,7 @@ import SignUp from "./components/login/SignUp";
 import Navbar from './components/navbar/navbar';
 import waves from './blob.svg';
 import { useEffect, useState } from 'react';
+import {Redirect} from "react-router-dom";
 
 function App() {
   const [localStorage, setLocalStorage] = useState({})
@@ -22,7 +23,10 @@ function App() {
     <Router>
       <div class='App' style={{ backgroundImage: `url(${waves})` }}>
         <Switch>
-         
+          <Route exact path="/">
+            <Redirect to="/Login" />
+          </Route>
+
           <Route path="/Login" component={Login} />
 
           <Route path="/SignUp" component={SignUp} />
@@ -34,10 +38,7 @@ function App() {
           <Route path="/places" component={PlacesStepsButtons} />
 
           <Route path="/placeCalender" component={Chalender} />
-
-          {/* <Route exact path="/placesCalender"> */}
-            {/* <Chalender isAdmin={localStorage["is_admin"]} placeID={1} placeName="mamas" course_id={localStorage["course_id"]} userDisplayName={localStorage["display_name"]}/> */}
-          {/* </Route> */}
+          
         </Switch>
       </div>
     </Router>
