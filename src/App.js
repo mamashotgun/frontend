@@ -6,11 +6,13 @@ import BaseStepsButtons from "./components/SelectionStepper/BaseStepsButtons";
 import CategoriesStepsButtons from "./components/SelectionStepper/CategoriesStepsButtons";
 import Login from "./components/login/Login";
 import SignUp from "./components/login/SignUp";
+import Navbar from './components/calendar/navbar/navbar';
+import waves from './blob.svg';
 
 function App() {
   return (
     <Router>
-      <div>
+      <div style={{ backgroundImage: `url(${waves})` }}>
         <Switch>
           <Route exact path="/">
           <Chalender placeID={1} courseID={1} placeName="mamas"/>
