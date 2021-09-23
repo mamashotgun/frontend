@@ -33,39 +33,45 @@ export default function SignUp() {
   };
 
   return (
-    <div className="signUp">
-      <form>
-        <h1>Create a course</h1>
+    <div className="container">
+      <div className="signUp">
+        <form>
+          <h1>Create a course</h1>
 
-        <TextField
-          required
-          className="textbox"
-          label="Course user name"
-          variant="outlined"
-          onChange={(event) => setCourseName(event.target.value)}
-          value={courseName}
-        />
-        <TextField
-          required
-          className="textbox"
-          label="Course display names"
-          variant="outlined"
-          onChange={(event) => setDisplayName(event.target.value)}
-          value={displayName}
-        />
-        <TextField
-          required
-          type="password"
-          className="textbox"
-          label="Password"
-          onChange={(event) => setPassword(event.target.value)}
-          value={password}
-        />
+          <TextField
+            required
+            className="textbox"
+            label="Course user name"
+            variant="outlined"
+            onChange={(event) => setCourseName(event.target.value)}
+            value={courseName}
+          />
+          <TextField
+            required
+            className="textbox"
+            label="Course display names"
+            variant="outlined"
+            onChange={(event) => setDisplayName(event.target.value)}
+            value={displayName}
+          />
+          <TextField
+            required
+            type="password"
+            className="textbox"
+            label="Password"
+            onChange={(event) => setPassword(event.target.value)}
+            value={password}
+          />
 
-        <Button className="createButton" variant="contained" onClick={onSubmit}>
-          Create
-        </Button>
-      </form>
+          <Button
+            className="createButton"
+            variant="contained"
+            onClick={onSubmit}
+          >
+            Create
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
