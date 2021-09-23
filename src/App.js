@@ -10,18 +10,21 @@ import {
 } from "react-router-dom";
 import BaseStepsButtons from './components/SelectionStepper/BaseStepsButtons';
 import CategoriesStepsButtons from './components/SelectionStepper/CategoriesStepsButtons';
+import PlacesStepsButtons from './components/SelectionStepper/PlacesStepsButtons';
 
 function App() {
   return (
     <Router>
       <div>
         <Switch>
-          <Route exact path="/">
-          <Chalender placeID={1} courseID={1} placeName="mamas"/>
+          <Route exact path="/places/<places>/calender">
+            <Chalender placeID={1} courseID={1} placeName="mamas" />
           </Route>
           <Route path="/Base" component={BaseStepsButtons} />
 
           <Route path="/Category" component={CategoriesStepsButtons} />
+
+          <Route path="/places" component={PlacesStepsButtons} />
 
           <Route path="/about">
             <StepperLine />
