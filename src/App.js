@@ -1,17 +1,36 @@
 import logo from './logo.svg';
 import './App.css';
 import Chalender from './components/calendar/calendar'
+import StepperLine from './components/SelectionStepper/StepperLine'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import BaseStepsButtons from './components/SelectionStepper/BaseStepsButtons';
+import CategoriesStepsButtons from './components/SelectionStepper/CategoriesStepsButtons';
 import Navbar from './components/calendar/navbar/navbar'
 import waves from './blob.svg';
 
 function App() {
   return (
-    <div className="App" style={{ backgroundImage: `url(${waves})` }}>
-      <div className="main-section">
-        <Navbar />
-        <Chalender/>
+    <Router>
+      <div style={{ backgroundImage: `url(${waves})` }}>
+        <Switch>
+          <Route exact path="/">
+          <Chalender placeID={1} courseID={1} placeName="mamas"/>
+          </Route>
+          <Route path="/Base" component={BaseStepsButtons} />
+
+          <Route path="/Category" component={CategoriesStepsButtons} />
+
+          <Route path="/about">
+            <StepperLine />
+          </Route>
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 
