@@ -5,6 +5,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import StepperLine from "./StepperLine";
 import { motion } from "framer-motion";
+import NavBar from "../navbar/navbar";
 
 export default function CategoriesStepsButtons(props) {
   const locationId = localStorage.getItem("location_id");
@@ -35,6 +36,7 @@ export default function CategoriesStepsButtons(props) {
 
   return (
     <div>
+      <NavBar name={course.display_name}></NavBar>
       <StepperLine step={1} />
       <motion.div
         animate={{ x: "5rem" }}

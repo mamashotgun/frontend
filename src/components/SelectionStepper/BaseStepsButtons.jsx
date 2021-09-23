@@ -4,6 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import StepperLine from "./StepperLine";
 import { motion } from "framer-motion";
+import NavBar from "../navbar/navbar";
 
 export default function BaseStepsButtons(props) {
   const [bases, setBases] = useState([]);
@@ -33,6 +34,7 @@ export default function BaseStepsButtons(props) {
 
   return (
     <div>
+      <NavBar name={course.display_name}></NavBar>
       <StepperLine step={0} />
       <motion.div
         animate={{ x: "5rem" }}
