@@ -11,14 +11,19 @@ import Login from "./components/login/Login";
 import SignUp from "./components/login/SignUp";
 import Navbar from './components/navbar/navbar';
 import waves from './blob.svg';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [localStorage, setLocalStorage] = useState({})
+  useEffect(()=>{
+    setLocalStorage(JSON.parse(window.localStorage.getItem('course')))
+  }, [])
   return (
     <Router>
       <div class='App' style={{ backgroundImage: `url(${waves})` }}>
         <Switch>
-        <Route exact path="/">
-            <Chalender placeID={1} courseID={1} placeName="mamas" isAdmin={true}/>
+        <Route exact path="/places">
+        <Chalender isAdmin={localStorage["is_admin"]} placeID={1} placeName="mamas" course_id={localStorage["course_id"]} userDisplayName={localStorage["display_name"]}/>
           </Route>
           <Route exact path="/places/<places>/calender">
             <Chalender placeID={1} courseID={1} placeName="mamas" />

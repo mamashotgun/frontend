@@ -8,21 +8,21 @@ import Card from '@mui/material/Card';
 import axios from 'axios'
 import CircularIndeterminate from '../loading/loading'
 export default class DemoApp extends React.Component {
+  
   state = {
     weekendsVisible: true,
     currentEvents: [],
     placeName: this.props.placeName,
-    userDisplayName: JSON.parse(localStorage.getItem('course')).display_name,
-    course_id: JSON.parse(localStorage.getItem('course')).course_id,
+    userDisplayName: this.props.userDisplayName,
+    course_id: this.props.course_id,
     place_id: this.props.placeID,
     description: this.props.description,
     isLoading: true,
-    isAdmin: JSON.parse(localStorage.getItem('course')).is_admin,
+    isAdmin: this.props.isAdmin,
     calendarEvents: []
   }
  
   render() {
-    console.log(JSON.parse(localStorage.getItem('course')));
     return (
       <div className='component-calander-container'>
         {
@@ -64,6 +64,7 @@ export default class DemoApp extends React.Component {
       </div>
     )
   }
+  
   componentDidMount = async () => {
     this.updateCalendar(await this.getDates()) 
   }
@@ -72,10 +73,9 @@ export default class DemoApp extends React.Component {
     console.log(response);
     return response.data
   }
-
   updateCalendar = (dataList) => {
     const tempArr = []
-    console.log("updating calender");
+
     dataList.forEach(item => {
       tempArr.push(
         {
@@ -123,8 +123,6 @@ export default class DemoApp extends React.Component {
       end: selectInfo.endStr,
       allDay: selectInfo.allDay
     })
-    //this.updateCalendar(await this.getDates()) 
-    // add indication of success
   }
 
   handleEventClick = async (clickInfo) => {
@@ -151,3 +149,4 @@ function renderEventContent(eventInfo) {
     </>
   )
 }
+
