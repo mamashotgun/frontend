@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
 }
 
 .login  {
@@ -11,6 +12,7 @@
     flex-direction: column;
     margin-left: 25%;
     margin-right: 25%;
+    color: #f4f1de;
 }
 
 .login .textbox {
@@ -28,4 +30,17 @@
 
 .login h1{
     font-size: 4.5rem;
+    animation: float 7.5s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-15px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
 }
