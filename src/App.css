@@ -16,3 +16,11 @@ body {
     width: 8rem;
     height: 5rem;
 }
+
+.stepper-buttons-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-right: 10rem;
+}
