@@ -32,6 +32,10 @@
     animation: float 7.5s ease-in-out infinite;
 }
 
+.login .Alert{
+    margin-top: 2rem;
+}
+
 @keyframes float {
 	0% {
 		transform: translatey(0px);

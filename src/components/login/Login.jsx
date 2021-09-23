@@ -1,3 +1,4 @@
+import Alert from '@mui/material/Alert';
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -33,6 +34,7 @@ export default function Login() {
   const history = useHistory();
 
   return (
+    
     <div className="container">
       <div className="login">
         <h1>Shotgun</h1>
@@ -52,7 +54,6 @@ export default function Login() {
         >
           Login
         </Button>
-
         <p>Or if you're new:</p>
 
         <Button
@@ -63,6 +64,9 @@ export default function Login() {
           Create a course
         </Button>
       </div>
+      <Alert variant="filled" severity="error">
+        This is an error alert — check it out!
+      </Alert>
     </div>
   );
 }
