@@ -6,24 +6,26 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import Card from '@mui/material/Card';
 import axios from 'axios'
+import CircularIndeterminate from '../loading/loading'
 export default class DemoApp extends React.Component {
- 
   state = {
     weekendsVisible: true,
     currentEvents: [],
     placeName: this.props.placeName,
     course_id: this.props.courseID,
     place_id: this.props.placeID,
+    description: this.props.description,
     isLoading: true,
+    isAdmin: this.props.isAdmin,
     calendarEvents: []
   }
  
   render() {
     return (
       <div className='component-calander-container'>
-        <p style={{position:"absolut", buttom: 0}}>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
-        {/*this.renderSidebar()*/}
-        {!this.state.isLoading &&
+        {
+        !this.state.isLoading 
+        ? 
         <div className='calendar-card'>
           <Card>
             <div className='calendar-main'>
@@ -54,8 +56,9 @@ export default class DemoApp extends React.Component {
               />
             </div>
           </Card>
-          </div>
+          </div> : CircularIndeterminate
   }
+          <p style={{position:"absolut", buttom: 0}}>place id: {this.state.place_id} course_id: {this.state.course_id} name: {this.props.placeName}</p>
       </div>
     )
   }
@@ -77,6 +80,7 @@ export default class DemoApp extends React.Component {
           title: item.display_name,
           start: item.start_time,
           end: item.end_time,
+          course_id: item.course_id,
           allDay: false
         }
       )
@@ -106,14 +110,18 @@ export default class DemoApp extends React.Component {
       start_time: selectInfo.start,
       end_time: selectInfo.end
     }, article);
-
+    this.updateCalendar(await this.getDates()) 
     // add indication of success
   }
 
-  handleEventClick = (clickInfo) => {
-    if (prompt(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove()
+  handleEventClick = async (clickInfo) => {
+    console.log(clickInfo);
+      if(this.props.isAdmin || clickInfo.event._def.extendedProps.course_id === this.props.course_id){
+      if(prompt("are you sure you want to delete? (type YES)")){
+        axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
+      }
     }
+    this.updateCalendar(await this.getDates()) 
   }
 
   handleEvents = (events) => {
