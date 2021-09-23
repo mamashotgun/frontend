@@ -10,6 +10,7 @@ export default function CategoriesStepsButtons(props) {
     const locationId = props.location.params.location_id;
     const [categories, setCategories] = useState([]);
     const history = useHistory()
+    const course = props.location.params.course
 
     useEffect(async () => {
         try {
@@ -27,7 +28,7 @@ export default function CategoriesStepsButtons(props) {
     const LoadPlace = (category_id) => {
         history.push({
             pathname: '/Places',  // query string
-            params: { location_id: locationId, category_id: category_id }
+            params: { location_id: locationId, category_id: category_id , course: course}
 
         })
     }

@@ -10,6 +10,7 @@ export default function PlacesStepsButtons(props) {
     const [places, setPlaces] = useState([]);
     const stepperData = props.location.params
     const history = useHistory()
+    const course = props.location.params.course
 
     useEffect(async () => {
         try {
@@ -26,10 +27,11 @@ export default function PlacesStepsButtons(props) {
     }, [])
 
     const LoadCalender = (placeObject) => {
+        console.log(course)
         console.log({ placeID: placeObject.place_id, PlaceName: placeObject.name, description: placeObject.description })
         history.push({
             pathname: '/placeCalender',  // query string
-            params: { placeID: placeObject.place_id, PlaceName: placeObject.name, description: placeObject.description }
+            params: { placeID: placeObject.place_id, PlaceName: placeObject.name, description: placeObject.description, course: course }
         })
     }
 

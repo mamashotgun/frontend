@@ -5,10 +5,11 @@ import { useHistory } from 'react-router-dom';
 import StepperLine from './StepperLine'
 import { motion } from "framer-motion"
 
-export default function BaseStepsButtons() {
+export default function BaseStepsButtons(props) {
     const [bases, setBases] = useState([]);
     const [selectedBases, setSelectedBases] = useState(null);
     const history = useHistory()
+    const course = props.location.params.course
     useEffect(async () => {
         try {
             let response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/locations`)
@@ -22,10 +23,10 @@ export default function BaseStepsButtons() {
 
     const selectBase = (location_id) => {
         setSelectedBases(location_id);
-        console.log(location_id)
+        console.log(course)
         history.push({
             pathname: '/Category',  // query string
-            params: { location_id: location_id }
+            params: { location_id: location_id, course: course }
 
         })
     }

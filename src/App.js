@@ -22,9 +22,7 @@ function App() {
     <Router>
       <div class='App' style={{ backgroundImage: `url(${waves})` }}>
         <Switch>
-          <Route exact path="/places/<places>/calender">
-            <Chalender placeID={1} courseID={1} placeName="mamas" />
-          </Route>
+         
           <Route path="/Login" component={Login} />
 
           <Route path="/SignUp" component={SignUp} />
@@ -37,12 +35,9 @@ function App() {
 
           <Route path="/placeCalender" component={Chalender} />
 
-          <Route path="/about">
-            <StepperLine />
-          </Route>
-          <Route exact path="/places">
-            <Chalender isAdmin={localStorage["is_admin"]} placeID={1} placeName="mamas" course_id={localStorage["course_id"]} userDisplayName={localStorage["display_name"]}/>
-          </Route>
+          {/* <Route exact path="/placesCalender"> */}
+            {/* <Chalender isAdmin={localStorage["is_admin"]} placeID={1} placeName="mamas" course_id={localStorage["course_id"]} userDisplayName={localStorage["display_name"]}/> */}
+          {/* </Route> */}
         </Switch>
       </div>
     </Router>
