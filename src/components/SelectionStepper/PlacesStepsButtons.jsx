@@ -4,6 +4,7 @@ import StepperLine from './StepperLine'
 // import { useState, useEffect } from 'preact/hooks';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { motion } from "framer-motion"
 
 export default function PlacesStepsButtons(props) {
     const [places, setPlaces] = useState([]);
@@ -35,13 +36,18 @@ export default function PlacesStepsButtons(props) {
     return (
         <div>
             <StepperLine step={2} />
-            {
-                places?.map((buttonText, index) => {
-                    return (
-                        <Button id="stepper-buttons" variant="outlined" onClick={() => LoadCalender(buttonText)} key={index}>{buttonText.name}</Button>
-                    )
-                })
-            }
+            <motion.div
+                animate={{ x: "5rem" }}
+                transition={{ ease: "easeOut", duration: 1 }} className="stepper-buttons-grid">
+
+                {
+                    places?.map((buttonText, index) => {
+                        return (
+                            <Button id="stepper-buttons" variant="outlined" onClick={() => LoadCalender(buttonText)} key={index}>{buttonText.name}</Button>
+                        )
+                    })
+                }
+            </motion.div>
         </div >
     );
 }

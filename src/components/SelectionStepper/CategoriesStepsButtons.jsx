@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import StepperLine from './StepperLine';
+import { motion } from "framer-motion"
 
 export default function CategoriesStepsButtons(props) {
     const locationId = props.location.params.location_id;
@@ -34,13 +35,17 @@ export default function CategoriesStepsButtons(props) {
     return (
         <div>
             <StepperLine step={1} />
-            {
-                categories?.map((buttonText, index) => {
-                    return (
-                        <Button id="stepper-buttons" variant="outlined" onClick={() => LoadPlace(buttonText.category_id)} key={index}>{buttonText.name}</Button>
-                    )
-                })
-            }
+            <motion.div
+                animate={{ x: "5rem" }}
+                transition={{ ease: "easeOut", duration: 1 }} className="stepper-buttons-grid">
+                {
+                    categories?.map((buttonText, index) => {
+                        return (
+                            <Button id="stepper-buttons" variant="outlined" onClick={() => LoadPlace(buttonText.category_id)} key={index}>{buttonText.name}</Button>
+                        )
+                    })
+                }
+            </motion.div>
         </div >
     );
 }
