@@ -27,6 +27,8 @@ export default function SignUp() {
       headers
     );
 
+    localStorage.setItem("course", JSON.stringify(response.data));
+
     history.push({ pathname: "/Base", params: { course: response.data } });
   };
 

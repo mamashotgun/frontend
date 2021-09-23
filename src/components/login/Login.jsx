@@ -23,6 +23,8 @@ export default function Login() {
         headers
       );
 
+      localStorage.setItem("course", JSON.stringify(response.data));
+
       history.push({ pathname: "/Base", params: { course: response.data } });
     } catch (error) {
       console.error(error);
