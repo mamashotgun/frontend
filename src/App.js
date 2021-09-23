@@ -9,13 +9,13 @@ import StepperLine from "./components/SelectionStepper/StepperLine";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/login/Login";
 import SignUp from "./components/login/SignUp";
-import Navbar from './components/calendar/navbar/navbar';
+import Navbar from './components/navbar/navbar';
 import waves from './blob.svg';
 
 function App() {
   return (
     <Router>
-      <div style={{ backgroundImage: `url(${waves})` }}>
+      <div class='App' style={{ backgroundImage: `url(${waves})` }}>
         <Switch>
         <Route exact path="/">
             <Chalender placeID={1} courseID={1} placeName="mamas" isAdmin={true}/>

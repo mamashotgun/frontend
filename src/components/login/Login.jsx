@@ -33,38 +33,36 @@ export default function Login() {
   const history = useHistory();
 
   return (
-    <div className="login">
-      <h1>Shotgun</h1>
+    <div className="container">
+      <div className="login">
+        <h1>Shotgun</h1>
 
-      <TextField
-        className="textbox"
-        label="Course"
-        variant="outlined"
-        value={courseName}
-        onChange={(event) => setCourseName(event.target.value)}
-      />
-      <TextField
-        className="textbox"
-        type="password"
-        label="Password"
-        variant="outlined"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-      />
+        <TextField className="textbox" label="Course" variant="outlined" />
+        <TextField
+          className="textbox"
+          type="password"
+          label="Password"
+          variant="outlined"
+        />
 
-      <Button className="loginButton" variant="contained" onClick={login}>
-        Login
-      </Button>
+        <Button
+          className="loginButton"
+          variant="contained"
+          onClick={() => history.push({ pathname: "/Base" })}
+        >
+          Login
+        </Button>
 
-      <p>Or if you're new:</p>
+        <p>Or if you're new:</p>
 
-      <Button
-        className="signUpButton"
-        variant="outlined"
-        onClick={() => history.push({ pathname: "/SignUp" })}
-      >
-        Create a course
-      </Button>
+        <Button
+          className="signUpButton"
+          variant="outlined"
+          onClick={() => history.push({ pathname: "/SignUp" })}
+        >
+          Create a course
+        </Button>
+      </div>
     </div>
   );
 }
