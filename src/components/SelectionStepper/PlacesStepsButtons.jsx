@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card } from '@mui/material';
 import StepperLine from './StepperLine'
-// import { useState, useEffect } from 'preact/hooks';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { motion } from "framer-motion"
+import UpdatePlaces from '../UpdatePlaces/UpdatePlaces'
 
 export default function PlacesStepsButtons(props) {
     const [places, setPlaces] = useState([]);
@@ -50,6 +50,7 @@ export default function PlacesStepsButtons(props) {
                     })
                 }
             </motion.div>
+            <UpdatePlaces stepperParams={{category_id:stepperData.category_id , location_id:stepperData.location_id}} />
         </div >
     );
 }
