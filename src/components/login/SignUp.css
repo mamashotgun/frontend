@@ -1,9 +1,18 @@
+.container{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
 .signUp form {
     display: flex;
     flex-direction: column;
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-top: 10%;
+    justify-content: space-evenly;
+    width: 100%;
+    color: #f4f1de;
 }
 
 .signUp .createButton  {
@@ -12,4 +21,8 @@
 
 .signUp .textbox {
     margin-top: 0.5em;
+}
+
+h1{
+    font-size: 3.5rem;
 }
