@@ -17,11 +17,12 @@ export default class DemoApp extends React.Component {
     place_id: this.props.placeID,
     description: this.props.description,
     isLoading: true,
-    isAdmin: this.props.isAdmin,
+    isAdmin: JSON.parse(localStorage.getItem('course')).is_admin,
     calendarEvents: []
   }
  
   render() {
+    console.log(JSON.parse(localStorage.getItem('course')));
     return (
       <div className='component-calander-container'>
         {
