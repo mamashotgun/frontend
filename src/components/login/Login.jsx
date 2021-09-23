@@ -37,19 +37,23 @@ export default function Login() {
       <div className="login">
         <h1>Shotgun</h1>
 
-        <TextField className="textbox" label="Course" variant="outlined" />
+        <TextField
+          className="textbox"
+          label="Course"
+          variant="outlined"
+          onChange={(event) => setCourseName(event.target.value)}
+          value={courseName}
+        />
         <TextField
           className="textbox"
           type="password"
           label="Password"
           variant="outlined"
+          onChange={(event) => setPassword(event.target.value)}
+          value={password}
         />
 
-        <Button
-          className="loginButton"
-          variant="contained"
-          onClick={() => history.push({ pathname: "/Base" })}
-        >
+        <Button className="loginButton" variant="contained" onClick={login}>
           Login
         </Button>
 
