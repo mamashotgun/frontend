@@ -12,7 +12,8 @@ export default class DemoApp extends React.Component {
     weekendsVisible: true,
     currentEvents: [],
     placeName: this.props.placeName,
-    course_id: this.props.courseID,
+    userDisplayName: JSON.parse(localStorage.getItem('course')).display_name,
+    course_id: JSON.parse(localStorage.getItem('course')).course_id,
     place_id: this.props.placeID,
     description: this.props.description,
     isLoading: true,
@@ -97,11 +98,10 @@ export default class DemoApp extends React.Component {
   }
     
   handleDateSelect =  async (selectInfo) => {
-    let title = prompt('Please enter a new title for your event')
+    let title = this.props.userDisplayName
     let calendarApi = selectInfo.view.calendar
 
     calendarApi.unselect() // clear date selection
-    this.setState({...this.state,isLoading: true})
     const article = { 
       headers: {'Content-Type': 'application/json'}
       };
@@ -112,19 +112,27 @@ export default class DemoApp extends React.Component {
       start_time: selectInfo.start,
       end_time: selectInfo.end
     }, article);
-    this.updateCalendar(await this.getDates()) 
+
+    console.log(response.data);
+
+    calendarApi.addEvent({
+      id: response.data,
+      title,
+      start: selectInfo.startStr,
+      end: selectInfo.endStr,
+      allDay: selectInfo.allDay
+    })
+    //this.updateCalendar(await this.getDates()) 
     // add indication of success
   }
 
   handleEventClick = async (clickInfo) => {
-    console.log(clickInfo);
       if(this.props.isAdmin || clickInfo.event._def.extendedProps.course_id === this.props.course_id){
-      if(prompt("are you sure you want to delete? (type YES)")){
-        axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
-      }
+        if(prompt("are you sure you want to delete? (type YES)")){
+          axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
+          clickInfo.event.remove()
+        }
     }
-    this.setState({...this.state,isLoading: true})
-    this.updateCalendar(await this.getDates()) 
   }
 
   handleEvents = (events) => {
@@ -140,14 +148,5 @@ function renderEventContent(eventInfo) {
       <b>{eventInfo.timeText}</b>
       <i>{eventInfo.event.title}</i>
     </>
-  )
-}
-
-function renderSidebarEvent(event) {
-  return (
-    <li key={event.id}>
-      <b>{formatDate(event.start, {year: 'numeric', month: 'short', day: 'numeric'})}</b>
-      <i>{event.title}</i>
-    </li>
   )
 }

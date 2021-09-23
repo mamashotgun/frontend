@@ -18,7 +18,7 @@ function App() {
       <div style={{ backgroundImage: `url(${waves})` }}>
         <Switch>
         <Route exact path="/">
-            <Chalender placeID={1} courseID={1} placeName="mamas" />
+            <Chalender placeID={1} courseID={1} placeName="mamas" isAdmin={true}/>
           </Route>
           <Route exact path="/places/<places>/calender">
             <Chalender placeID={1} courseID={1} placeName="mamas" />
