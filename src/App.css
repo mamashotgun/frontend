@@ -35,3 +35,12 @@ body {
     margin-right: 10rem;
     flex-flow: wrap;
 }
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    margin-right: 10rem;
+    flex-flow: wrap;
+}
