@@ -1,0 +1,15 @@
+.signUp form {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-top: 10%;
+}
+
+.signUp .createButton  {
+    margin-top: 1em;
+}
+
+.signUp .textbox {
+    margin-top: 0.5em;
+}
