@@ -26,13 +26,10 @@ export default function CategoriesStepsButtons(props) {
   }, []);
 
   const LoadPlace = (category_id) => {
+    localStorage.setItem("location_id", locationId);
+    localStorage.setItem("category_id", category_id);
     history.push({
       pathname: "/Places", // query string
-      params: {
-        location_id: locationId,
-        category_id: category_id,
-        course: course,
-      },
     });
   };
 
