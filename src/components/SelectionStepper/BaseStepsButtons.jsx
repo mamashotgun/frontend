@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import StepperLine from './StepperLine'
 
 export default function BaseStepsButtons() {
     const [bases, setBases] = useState([]);
@@ -9,7 +10,7 @@ export default function BaseStepsButtons() {
     const history = useHistory()
     useEffect(async () => {
         try {
-            let response = await axios.get("http://172.20.10.4:3001/locations")
+            let response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/locations`)
             setBases(response.data)
         }
         catch (error) {
@@ -18,22 +19,23 @@ export default function BaseStepsButtons() {
 
     }, [])
 
-    const selectBase = (baseId) => {
-        setSelectedBases(baseId);
-        console.log(baseId)
+    const selectBase = (location_id) => {
+        setSelectedBases(location_id);
+        console.log(location_id)
         history.push({
             pathname: '/Category',  // query string
-            params: { baseId: baseId }
+            params: { location_id: location_id }
 
         })
     }
 
     return (
         <div>
+            <StepperLine step={0} />
             {
                 bases?.map((buttonText, index) => {
                     return (
-                        <Button onClick={() => selectBase(buttonText.location_id)} key={index}>{buttonText.name}</Button>
+                        <Button id="stepper-buttons" variant="outlined" onClick={() => selectBase(buttonText.location_id)} key={index}>{buttonText.name}</Button>
                     )
                 })
             }

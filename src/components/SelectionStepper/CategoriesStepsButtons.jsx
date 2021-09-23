@@ -2,12 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 // import { useState, useEffect } from 'preact/hooks';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import StepperLine from './StepperLine';
 
 export default function CategoriesStepsButtons(props) {
+    const locationId = props.location.params.location_id;
+    const [categories, setCategories] = useState([]);
+    const history = useHistory()
+
     useEffect(async () => {
         try {
-            console.log(props.location)
-            let response = await axios.get("http://172.20.10.4:3001/categories")
+            console.log(props)
+            let response = await axios.get(`${process.env.REACT_APP_API_ADDRESS}/categories`)
+            console.log(response.data)
             setCategories(response.data)
         }
         catch (error) {
@@ -15,15 +22,22 @@ export default function CategoriesStepsButtons(props) {
         }
 
     }, [])
-    const [categories, setCategories] = useState([]);
 
+    const LoadPlace = (category_id) => {
+        history.push({
+            pathname: '/Places',  // query string
+            params: { location_id: locationId, category_id: category_id }
+
+        })
+    }
 
     return (
         <div>
+            <StepperLine step={1} />
             {
                 categories?.map((buttonText, index) => {
                     return (
-                        <Button key={index}>{buttonText.name}</Button>
+                        <Button id="stepper-buttons" variant="outlined" onClick={() => LoadPlace(buttonText.category_id)} key={index}>{buttonText.name}</Button>
                     )
                 })
             }
