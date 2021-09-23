@@ -16,6 +16,7 @@ export default class DemoApp extends React.Component {
     place_id: this.props.placeID,
     description: this.props.description,
     isLoading: true,
+    isAdmin: this.props.isAdmin,
     calendarEvents: []
   }
  
@@ -79,7 +80,7 @@ export default class DemoApp extends React.Component {
           title: item.display_name,
           start: item.start_time,
           end: item.end_time,
-          someFakeData: 12341234123412341234,
+          course_id: item.course_id,
           allDay: false
         }
       )
@@ -115,12 +116,11 @@ export default class DemoApp extends React.Component {
 
   handleEventClick = (clickInfo) => {
     console.log(clickInfo);
-    if(prompt("are you sure you want to delete?")){
-      axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
+      if(this.props.isAdmin || clickInfo.event._def.extendedProps.course_id === this.props.course_id){
+      if(prompt("are you sure you want to delete? (type YES)")){
+        axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
+      }
     }
-    // if (prompt(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-    //   clickInfo.event.remove()
-    // }
   }
 
   handleEvents = (events) => {

@@ -17,7 +17,7 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/">
-          <Chalender placeID={1} courseID={1} placeName="mamas"/>
+          <Chalender placeID={1} courseID={1} placeName="mamas" isAdmin={true}/>
           </Route>
           <Route path="/Base" component={BaseStepsButtons} />
 
