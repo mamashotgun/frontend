@@ -1,9 +1,16 @@
+.container{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .login  {
     display: flex;
     flex-direction: column;
-    margin-left: 30%;
-    margin-right: 30%;
-    margin-top: 10%;
+    margin-left: 25%;
+    margin-right: 25%;
 }
 
 .login .textbox {
@@ -16,4 +23,9 @@
 
 .login p {
     text-align: center;
+    font-size: 1.25rem;
+}
+
+.login h1{
+    font-size: 4.5rem;
 }
