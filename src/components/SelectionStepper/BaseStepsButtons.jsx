@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import StepperLine from './StepperLine'
+import { motion } from "framer-motion"
 
 export default function BaseStepsButtons() {
     const [bases, setBases] = useState([]);
@@ -32,13 +33,16 @@ export default function BaseStepsButtons() {
     return (
         <div>
             <StepperLine step={0} />
-            {
-                bases?.map((buttonText, index) => {
-                    return (
-                        <Button id="stepper-buttons" variant="outlined" onClick={() => selectBase(buttonText.location_id)} key={index}>{buttonText.name}</Button>
-                    )
-                })
-            }
+            <motion.div
+                animate={{ x: "5rem" }}
+                transition={{ ease: "easeOut", duration: 1 }} className="stepper-buttons-grid">                {
+                    bases?.map((buttonText, index) => {
+                        return (
+                            <Button id="stepper-buttons" variant="outlined" onClick={() => selectBase(buttonText.location_id)} key={index}>{buttonText.name}</Button>
+                        )
+                    })
+                }
+            </motion.div>
         </div >
     );
 }
