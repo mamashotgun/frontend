@@ -110,17 +110,18 @@ export default class DemoApp extends React.Component {
       start_time: selectInfo.start,
       end_time: selectInfo.end
     }, article);
-
+    this.updateCalendar(await this.getDates()) 
     // add indication of success
   }
 
-  handleEventClick = (clickInfo) => {
+  handleEventClick = async (clickInfo) => {
     console.log(clickInfo);
       if(this.props.isAdmin || clickInfo.event._def.extendedProps.course_id === this.props.course_id){
       if(prompt("are you sure you want to delete? (type YES)")){
         axios.delete(`${process.env.REACT_APP_API_ADDRESS}/reservations/${clickInfo.event._def.publicId}`)
       }
     }
+    this.updateCalendar(await this.getDates()) 
   }
 
   handleEvents = (events) => {
